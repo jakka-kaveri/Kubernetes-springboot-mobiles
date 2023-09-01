@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mobiles-deployment
+  labels:
+    app: mobiles
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mobiles
+  template:
+    metadata:
+      labels:
+        app: mobiles
+    spec:
+      containers:
+        - name: mobiles
+          image: jakkakaveri/mobiles:2.0.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql-service:3306/mytables
+            - name: SPRING_DATASOURCE_USERNAME
+              value: root
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: mysqlrootpass
+          ports:
+            - containerPort: 80
